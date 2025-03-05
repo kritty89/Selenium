@@ -1,4 +1,4 @@
-package com.selenium.parabankproject;
+package com.Selenium.ParaBank;
 
 public class Main {
     public static void main(String[] args) {
