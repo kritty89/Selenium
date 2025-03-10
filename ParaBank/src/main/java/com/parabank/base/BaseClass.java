@@ -1,6 +1,9 @@
 package com.parabank.base;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,7 +29,15 @@ public class BaseClass {
         String browserName = prop.getProperty("browser");
 
         if (browserName.contains("Chrome")){
-            driver = newChromeDriver();
+            driver = new ChromeDriver();
+        }
+
+        else if (browserName.contains("Firefox")){
+            driver = new FirefoxDriver();
+        }
+
+        else if (browserName.contains("Internet Explorer")){
+            driver = new InternetExplorerDriver();
         }
     }
     }
