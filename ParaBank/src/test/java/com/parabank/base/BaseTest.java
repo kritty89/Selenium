@@ -4,16 +4,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 public class BaseTest {
-    public static WebDriver driver;
-    public static Properties prop;
+    protected WebDriver driver;
+    protected Properties prop;
+    protected WebDriverWait wait;
 
     public void loadConfig() {
         try {
@@ -26,19 +29,21 @@ public class BaseTest {
             throw new RuntimeException("Failed to load configuration file.");
         }
     }
-    public static void launchApp(){
+    public void launchApp(){
         String browserName = prop.getProperty("browser");
         if (browserName.contains("Chrome")){
             driver = new ChromeDriver();
         }
 
-        else if (browserName.contains("Firefox")){
+        else if (browserName.contains("Firefox")) {
             driver = new FirefoxDriver();
         }
 
         else if (browserName.contains("Internet Explorer")){
             driver = new InternetExplorerDriver();
         }
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     @BeforeMethod

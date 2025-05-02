@@ -2,11 +2,31 @@ package com.parabank.testcases;
 
 import com.parabank.base.BaseTest;
 import com.parabank.screens.LoginPage;
+import com.parabank.screens.RegisterPage;
 import com.parabank.utilities.ExcelUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
+
+    @Test(dataProvider = "registerData")
+    public void testRegister(String firstname,
+                             String lastname,
+                             String street,
+                             String city,
+                             String state,
+                             String zipcode,
+                             String phone,
+                             String ssn,
+                             String username,
+                             String password)
+    {
+        LoginPage loginPage = new LoginPage(driver);
+        RegisterPage registerPage = new RegisterPage(driver);
+        loginPage.clickRegister();
+        registerPage.register(firstname, lastname, street, city, state, zipcode, phone, ssn, username, password);
+    }
+
     @Test(dataProvider = "loginData")
     public void testLogin(String username, String password) {
         LoginPage loginPage = new LoginPage(driver);
@@ -14,8 +34,15 @@ public class LoginTest extends BaseTest {
     }
 
     @DataProvider(name = "loginData")
-    public Object[][] getData() {
+    public Object[][] getLoginData() {
         String excelPath = System.getProperty("user.dir") + "/TestData/LoginData.xlsx";
-        return ExcelUtils.getExcelData(excelPath, "Sheet1");
+        return ExcelUtils.getExcelData(excelPath, "Login");
     }
+
+    @DataProvider(name = "registerData")
+    public Object[][] getRegisterData() {
+        String excelPath = System.getProperty("user.dir") + "/TestData/LoginData.xlsx";
+        return ExcelUtils.getExcelData(excelPath, "Register");
+    }
+
 }
