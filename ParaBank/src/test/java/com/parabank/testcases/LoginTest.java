@@ -1,9 +1,11 @@
 package com.parabank.testcases;
 
 import com.parabank.base.BaseTest;
+import com.parabank.screens.HomePage;
 import com.parabank.screens.LoginPage;
 import com.parabank.screens.RegisterPage;
 import com.parabank.utilities.ExcelUtils;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -28,9 +30,13 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(dataProvider = "loginData")
-    public void testLogin(String username, String password) {
+    public void testLogin(String username, String password, String firstname) {
         LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
         loginPage.login(username, password);
+        String actualName = homePage.getUserName();
+        System.out.println(actualName);
+        Assert.assertTrue(actualName.toLowerCase().contains(firstname.toLowerCase()), "Username mismatch");
     }
 
     @DataProvider(name = "loginData")

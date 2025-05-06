@@ -5,9 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class HomePage extends BasePage {
-    WebDriver driver;
 
     public HomePage(WebDriver driver)
     {
@@ -15,6 +15,12 @@ public class HomePage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//input[contains(@name,'username')]")
-    WebElement usernameInput;
+    @FindBy(xpath = "//div[@id='leftPanel']//p[contains(@class,'smallText')]")
+    WebElement welcomeUser;
+
+    public String getUserName()
+    {
+        wait.until(ExpectedConditions.visibilityOf(welcomeUser));
+        return welcomeUser.getText();
+    }
 }
